@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class SpotifyClient {
-  static async initialize(){
+  static async initialize() {
     const response = await axios.post(
       "https://accounts.spotify.com/api/token",
       {
@@ -15,14 +15,22 @@ class SpotifyClient {
         },
       }
     );
-    
+
     let spotify = new SpotifyClient();
     spotify.token = response.data.access_token;
     return spotify;
   }
 
-  test() {
-    console.log("Testing SpotifyClient");
+  async getPopularSong() {
+    const response = await axios.get(
+      "https://api.spotify.com/v1/playlists/37i9dQZF1DX9vYRBO9gjDe/tracks",
+      {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      }
+    );
+    return response.data;
   }
 }
 
