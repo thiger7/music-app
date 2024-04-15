@@ -26,8 +26,9 @@ export default function App() {
 
   const fetchPopluarSongs = async () => {
     setIsLoading(true);
-    const result = spotify.getPopularSong();
-    const popularSongs = resule.map((item) => {
+    const result = await spotify.getPopularSongs();
+    console.log(result);
+    const popularSongs = result.items.map((item) => {
       return item.track;
     });
     setPopularSongs(popularSongs);

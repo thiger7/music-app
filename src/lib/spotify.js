@@ -21,7 +21,7 @@ class SpotifyClient {
     return spotify;
   }
 
-  async getPopularSong() {
+  async getPopularSongs() {
     const response = await axios.get(
       "https://api.spotify.com/v1/playlists/37i9dQZF1DX9vYRBO9gjDe/tracks",
       {
