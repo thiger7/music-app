@@ -3,6 +3,9 @@ import { SongList } from "./components/SongList";
 import spotify from "./lib/spotify";
 import { Player } from "./components/Player";
 import { SearchInput } from "./components/SearchInput";
+import { Pagination } from "./components/Pagination";
+
+const limit = 20;
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,9 +63,10 @@ export default function App() {
     setKeyword(e.target.value);
   };
 
-  const searchSongs = async () => {
+  const searchSongs = async (page) => {
     setIsLoading(true);
-    const result = await spotify.searchSongs(keyword);
+    const offset = parseInt(page) ? (parseInt(page) - 1) * limit : 0;
+    const result = await spotify.searchSongs(keyword, limit, offset);
     setSearchedSongs(result.items);
     setIsLoading(false);
   };
@@ -83,6 +87,7 @@ export default function App() {
             songs={isSearchedResult ? searchedSongs : popularSongs}
             onSongSelected={handleSongSelected}
           />
+          {isSearchedResult && <Pagination />}
         </section>
       </main>
       {selectedSong != null && (
